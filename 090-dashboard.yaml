@@ -1,0 +1,7 @@
+openstack-dashboard:
+  default-theme: default
+  default-create-volume: no
+  enforce-ssl: true
+  os-public-hostname: openstack.lab.hdys.home
+  password-retrieve: true
+  vip: 192.168.1.206

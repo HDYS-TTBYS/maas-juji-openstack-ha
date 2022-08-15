@@ -1,0 +1,5 @@
+credentials:
+  maas-one:
+    anyuser:
+      auth-type: oauth1
+      maas-oauth: {~/admin-api-key}

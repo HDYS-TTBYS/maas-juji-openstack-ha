@@ -1,0 +1,8 @@
+cinder:
+  block-device: None
+  glance-api-version: 2
+  openstack-origin: distro
+  os-admin-hostname: cinder.lab.hdys.home
+  os-internal-hostname: cinder.lab.hdys.home
+  os-public-hostname: cinder.lab.hdys.home
+  vip: 192.168.1.201

@@ -1,0 +1,8 @@
+nova-cloud-controller:
+  console-access-protocol: spice
+  os-admin-hostname: compute.lab.hdys.home
+  os-internal-hostname: compute.lab.hdys.home
+  os-public-hostname: compute.lab.hdys.home
+  vip: 192.168.1.205
+  network-manager: Neutron
+  openstack-origin: distro

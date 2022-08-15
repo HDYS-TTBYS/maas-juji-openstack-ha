@@ -1,0 +1,5 @@
+glance:
+  os-admin-hostname: glance.lab.hdys.home
+  os-internal-hostname: glance.lab.hdys.home
+  os-public-hostname: glance.lab.hdys.home
+  vip: 192.168.1.202

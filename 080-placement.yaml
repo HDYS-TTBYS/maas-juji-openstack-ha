@@ -1,0 +1,5 @@
+placement: 
+  os-admin-hostname: placement.lab.hdys.home
+  os-internal-hostname: placement.lab.hdys.home
+  os-public-hostname: placement.lab.hdys.home
+  vip: 192.168.1.207

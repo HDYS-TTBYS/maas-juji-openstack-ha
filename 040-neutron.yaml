@@ -1,0 +1,13 @@
+ovn-chassis:
+  bridge-interface-mappings: br-ex:ens18
+  ovn-bridge-mappings: physnet1:br-ex
+neutron-api:
+  neutron-security-groups: true
+  flat-network-providers: physnet1
+  openstack-origin: distro
+  os-admin-hostname: neutron-api.lab.hdys.home
+  os-internal-hostname: neutron-api.lab.hdys.home
+  os-public-hostname: neutron-api.lab.hdys.home
+  vip: 192.168.1.204
+ovn-central:
+  source: distro

@@ -1,0 +1,24 @@
+charm_name: hacluster
+
+smoke_bundles:
+  - focal-yoga
+
+gate_bundles:
+  - focal-yoga
+
+dev_bundles:
+  - jammy-yoga
+
+configure:
+  - zaza.openstack.charm_tests.keystone.setup.add_demo_user
+
+tests:
+  - zaza.openstack.charm_tests.hacluster.tests.HaclusterTest
+  - zaza.openstack.charm_tests.hacluster.tests.HaclusterScaleBackAndForthTest
+
+tests_options:
+  hacluster:
+    principle-app-name: keystone
+    hacluster-charm-name: hacluster
+  force_deploy:
+    - jammy-yoga

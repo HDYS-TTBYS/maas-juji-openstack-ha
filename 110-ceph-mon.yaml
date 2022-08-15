@@ -1,0 +1,4 @@
+ceph-mon:
+  expected-osd-count: 3
+  monitor-count: 3
+  source: distro

@@ -1,0 +1,7 @@
+bin/
+*.pyc
+*.charm
+.tox
+.testrepository
+.coverage
+.stestr

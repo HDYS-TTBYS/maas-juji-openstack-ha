@@ -1,0 +1,516 @@
+series: jammy
+applications:
+  ceph-mon:
+    charm: ceph-mon
+    channel: quincy/stable
+    revision: 109
+    num_units: 3
+    to:
+    - lxd:0
+    - lxd:1
+    - lxd:2
+    options:
+      expected-osd-count: 3
+      monitor-count: 3
+      source: distro
+    constraints: arch=amd64
+  ceph-osd:
+    charm: ceph-osd
+    channel: quincy/stable
+    revision: 534
+    num_units: 3
+    to:
+    - "0"
+    - "1"
+    - "2"
+    options:
+      osd-devices: /dev/sdb
+      source: distro
+    constraints: arch=amd64 tags=compute
+    storage:
+      bluestore-db: loop,1024M
+      bluestore-wal: loop,1024M
+      cache-devices: loop,10240M
+      osd-devices: loop,1024M
+      osd-journals: loop,1024M
+  ceph-radosgw:
+    charm: ceph-radosgw
+    channel: quincy/stable
+    revision: 526
+    num_units: 3
+    to:
+    - lxd:0
+    - lxd:1
+    - lxd:2
+    options:
+      os-admin-hostname: storage.lab.hdys.home
+      os-internal-hostname: storage.lab.hdys.home
+      os-public-hostname: storage.lab.hdys.home
+      vip: 192.168.1.200
+    constraints: arch=amd64
+  cinder:
+    charm: cinder
+    channel: yoga/stable
+    revision: 561
+    resources:
+      policyd-override: -1
+    num_units: 3
+    to:
+    - lxd:0
+    - lxd:1
+    - lxd:2
+    options:
+      block-device: None
+      glance-api-version: 2
+      openstack-origin: distro
+      os-admin-hostname: cinder.lab.hdys.home
+      os-internal-hostname: cinder.lab.hdys.home
+      os-public-hostname: cinder.lab.hdys.home
+      vip: 192.168.1.201
+    constraints: arch=amd64
+    storage:
+      block-devices: loop,10240M
+  cinder-ceph:
+    charm: cinder-ceph
+    channel: yoga/stable
+    revision: 502
+  cinder-hacluster:
+    charm: local:hacluster-7
+    options:
+      cluster_count: 3
+  cinder-mysql-router:
+    charm: mysql-router
+    channel: 8.0/stable
+    revision: 34
+  dashboard-hacluster:
+    charm: local:hacluster-5
+    options:
+      cluster_count: 3
+  dashboard-mysql-router:
+    charm: mysql-router
+    channel: 8.0/stable
+    revision: 34
+  easyrsa:
+    charm: cs:~containers/easyrsa
+    channel: stable
+    revision: 441
+    series: focal
+    resources:
+      easyrsa: 5
+    num_units: 1
+    to:
+    - lxd:0
+    constraints: arch=amd64
+  etcd:
+    charm: etcd
+    channel: stable
+    revision: 701
+    series: focal
+    resources:
+      core: 0
+      etcd: 3
+      snapshot: 0
+    num_units: 3
+    to:
+    - lxd:0
+    - lxd:1
+    - lxd:2
+    constraints: arch=amd64
+    storage:
+      data: loop,1024M
+  glance:
+    charm: glance
+    channel: yoga/stable
+    revision: 544
+    resources:
+      policyd-override: -1
+    num_units: 3
+    to:
+    - lxd:0
+    - lxd:1
+    - lxd:2
+    options:
+      os-admin-hostname: glance.lab.hdys.home
+      os-internal-hostname: glance.lab.hdys.home
+      os-public-hostname: glance.lab.hdys.home
+      vip: 192.168.1.202
+    constraints: arch=amd64
+  glance-hacluster:
+    charm: local:hacluster-6
+    options:
+      cluster_count: 3
+  glance-mysql-router:
+    charm: mysql-router
+    channel: 8.0/stable
+    revision: 34
+  keystone:
+    charm: keystone
+    channel: yoga/stable
+    revision: 572
+    resources:
+      policyd-override: -1
+    num_units: 3
+    to:
+    - lxd:0
+    - lxd:1
+    - lxd:2
+    options:
+      os-admin-hostname: keystone.lab.hdys.home
+      os-internal-hostname: keystone.lab.hdys.home
+      os-public-hostname: keystone.lab.hdys.home
+      vip: 192.168.1.203
+    constraints: arch=amd64
+  keystone-hacluster:
+    charm: local:hacluster-2
+    options:
+      cluster_count: 3
+  keystone-mysql-router:
+    charm: mysql-router
+    channel: 8.0/stable
+    revision: 34
+  memcached:
+    charm: memcached
+    channel: stable
+    revision: 36
+    series: bionic
+    num_units: 1
+    to:
+    - lxd:0
+    constraints: arch=amd64
+  mysql-innodb-cluster:
+    charm: mysql-innodb-cluster
+    channel: 8.0/stable
+    revision: 30
+    resources:
+      mysql-shell: -1
+    num_units: 3
+    to:
+    - lxd:0
+    - lxd:1
+    - lxd:2
+    constraints: arch=amd64
+  ncc-hacluster:
+    charm: local:hacluster-3
+    options:
+      cluster_count: 3
+  ncc-mysql-router:
+    charm: mysql-router
+    channel: 8.0/stable
+    revision: 34
+  neutron-api:
+    charm: neutron-api
+    channel: yoga/stable
+    revision: 526
+    resources:
+      policyd-override: -1
+    num_units: 3
+    to:
+    - lxd:0
+    - lxd:1
+    - lxd:2
+    options:
+      flat-network-providers: physnet1
+      neutron-security-groups: true
+      openstack-origin: distro
+      os-admin-hostname: neutron-api.lab.hdys.home
+      os-internal-hostname: neutron-api.lab.hdys.home
+      os-public-hostname: neutron-api.lab.hdys.home
+      vip: 192.168.1.204
+    constraints: arch=amd64
+  neutron-api-hacluster:
+    charm: local:hacluster-1
+    options:
+      cluster_count: 3
+  neutron-api-mysql-router:
+    charm: mysql-router
+    channel: 8.0/stable
+    revision: 34
+  neutron-api-plugin-ovn:
+    charm: neutron-api-plugin-ovn
+    channel: yoga/stable
+    revision: 29
+  nova-cloud-controller:
+    charm: nova-cloud-controller
+    channel: yoga/stable
+    revision: 605
+    resources:
+      policyd-override: -1
+    num_units: 3
+    to:
+    - lxd:0
+    - lxd:1
+    - lxd:2
+    options:
+      console-access-protocol: spice
+      network-manager: Neutron
+      openstack-origin: distro
+      os-admin-hostname: compute.lab.hdys.home
+      os-internal-hostname: compute.lab.hdys.home
+      os-public-hostname: compute.lab.hdys.home
+      vip: 192.168.1.205
+    constraints: arch=amd64
+  nova-compute:
+    charm: nova-compute
+    channel: yoga/stable
+    revision: 594
+    num_units: 3
+    to:
+    - "0"
+    - "1"
+    - "2"
+    options:
+      config-flags: default_ephemeral_format=ext4
+      customize-failure-domain: true
+      enable-live-migration: true
+      enable-resize: true
+      libvirt-image-backend: rbd
+      migration-auth-type: ssh
+      openstack-origin: distro
+      rbd-pool: cinder-ceph
+      virt-type: qemu
+    constraints: arch=amd64
+    storage:
+      ephemeral-device: loop,10240M
+  openstack-dashboard:
+    charm: openstack-dashboard
+    channel: yoga/stable
+    revision: 546
+    resources:
+      policyd-override: -1
+      theme: -1
+    num_units: 3
+    to:
+    - lxd:0
+    - lxd:1
+    - lxd:2
+    options:
+      default-create-volume: false
+      default-theme: default
+      enforce-ssl: true
+      os-public-hostname: openstack.lab.hdys.home
+      password-retrieve: true
+      vip: 192.168.1.206
+    constraints: arch=amd64
+  ovn-central:
+    charm: ovn-central
+    channel: 22.03/stable
+    revision: 31
+    num_units: 3
+    to:
+    - lxd:0
+    - lxd:1
+    - lxd:2
+    options:
+      source: distro
+    constraints: arch=amd64
+  ovn-chassis:
+    charm: ovn-chassis
+    channel: 22.03/stable
+    revision: 46
+    options:
+      bridge-interface-mappings: br-ex:ens18
+      ovn-bridge-mappings: physnet1:br-ex
+  placement:
+    charm: placement
+    channel: yoga/stable
+    revision: 49
+    num_units: 3
+    to:
+    - lxd:0
+    - lxd:1
+    - lxd:2
+    options:
+      os-admin-hostname: placement.lab.hdys.home
+      os-internal-hostname: placement.lab.hdys.home
+      os-public-hostname: placement.lab.hdys.home
+      vip: 192.168.1.207
+    constraints: arch=amd64
+  placement-hacluster:
+    charm: local:hacluster-4
+    options:
+      cluster_count: 3
+  placement-mysql-router:
+    charm: mysql-router
+    channel: 8.0/stable
+    revision: 34
+  rabbitmq-server:
+    charm: rabbitmq-server
+    channel: 3.9/stable
+    revision: 149
+    num_units: 3
+    to:
+    - lxd:0
+    - lxd:1
+    - lxd:2
+    options:
+      min-cluster-size: 3
+    constraints: arch=amd64
+  radosgw-hacluster:
+    charm: local:hacluster-8
+    options:
+      cluster_count: 3
+  vault:
+    charm: vault
+    channel: 1.7/stable
+    revision: 81
+    resources:
+      core: -1
+      vault: -1
+    num_units: 3
+    to:
+    - lxd:0
+    - lxd:1
+    - lxd:2
+    options:
+      vip: 192.168.1.208
+    constraints: arch=amd64
+  vault-hacluster:
+    charm: local:hacluster-0
+    options:
+      cluster_count: 3
+  vault-mysql-router:
+    charm: mysql-router
+    channel: 8.0/stable
+    revision: 34
+machines:
+  "0":
+    constraints: arch=amd64 tags=compute
+  "1":
+    constraints: arch=amd64 tags=compute
+  "2":
+    constraints: arch=amd64 tags=compute
+relations:
+- - vault:ha
+  - vault-hacluster:ha
+- - etcd:db
+  - vault:etcd
+- - etcd:certificates
+  - easyrsa:client
+- - vault-mysql-router:db-router
+  - mysql-innodb-cluster:db-router
+- - vault-mysql-router:shared-db
+  - vault:shared-db
+- - mysql-innodb-cluster:certificates
+  - vault:certificates
+- - neutron-api-hacluster:ha
+  - neutron-api:ha
+- - neutron-api-plugin-ovn:neutron-plugin
+  - neutron-api:neutron-plugin-api-subordinate
+- - neutron-api-plugin-ovn:ovsdb-cms
+  - ovn-central:ovsdb-cms
+- - neutron-api-plugin-ovn:certificates
+  - vault:certificates
+- - ovn-central:certificates
+  - vault:certificates
+- - ovn-chassis:certificates
+  - vault:certificates
+- - ovn-chassis:ovsdb
+  - ovn-central:ovsdb
+- - ovn-chassis:nova-compute
+  - nova-compute:neutron-plugin
+- - neutron-api:certificates
+  - vault:certificates
+- - neutron-api-mysql-router:db-router
+  - mysql-innodb-cluster:db-router
+- - neutron-api-mysql-router:shared-db
+  - neutron-api:shared-db
+- - keystone-mysql-router:db-router
+  - mysql-innodb-cluster:db-router
+- - keystone-mysql-router:shared-db
+  - keystone:shared-db
+- - keystone-hacluster:ha
+  - keystone:ha
+- - keystone:identity-service
+  - neutron-api:identity-service
+- - keystone:certificates
+  - vault:certificates
+- - rabbitmq-server:amqp
+  - neutron-api:amqp
+- - rabbitmq-server:amqp
+  - nova-compute:amqp
+- - ncc-mysql-router:db-router
+  - mysql-innodb-cluster:db-router
+- - ncc-mysql-router:shared-db
+  - nova-cloud-controller:shared-db
+- - ncc-hacluster:ha
+  - nova-cloud-controller:ha
+- - nova-cloud-controller:identity-service
+  - keystone:identity-service
+- - nova-cloud-controller:amqp
+  - rabbitmq-server:amqp
+- - nova-cloud-controller:neutron-api
+  - neutron-api:neutron-api
+- - nova-cloud-controller:cloud-compute
+  - nova-compute:cloud-compute
+- - nova-cloud-controller:certificates
+  - vault:certificates
+- - memcached:cache
+  - nova-cloud-controller:memcache
+- - placement-mysql-router:db-router
+  - mysql-innodb-cluster:db-router
+- - placement-mysql-router:shared-db
+  - placement:shared-db
+- - placement-hacluster:ha
+  - placement:ha
+- - placement:identity-service
+  - keystone:identity-service
+- - placement:placement
+  - nova-cloud-controller:placement
+- - placement:certificates
+  - vault:certificates
+- - dashboard-mysql-router:db-router
+  - mysql-innodb-cluster:db-router
+- - dashboard-mysql-router:shared-db
+  - openstack-dashboard:shared-db
+- - dashboard-hacluster:ha
+  - openstack-dashboard:ha
+- - openstack-dashboard:identity-service
+  - keystone:identity-service
+- - openstack-dashboard:certificates
+  - vault:certificates
+- - glance-mysql-router:db-router
+  - mysql-innodb-cluster:db-router
+- - glance-mysql-router:shared-db
+  - glance:shared-db
+- - glance-hacluster:ha
+  - glance:ha
+- - glance:image-service
+  - nova-cloud-controller:image-service
+- - glance:image-service
+  - nova-compute:image-service
+- - glance:identity-service
+  - keystone:identity-service
+- - glance:certificates
+  - vault:certificates
+- - ceph-mon:osd
+  - ceph-osd:mon
+- - ceph-mon:client
+  - nova-compute:ceph
+- - ceph-mon:client
+  - glance:ceph
+- - cinder-mysql-router:db-router
+  - mysql-innodb-cluster:db-router
+- - cinder-mysql-router:shared-db
+  - cinder:shared-db
+- - cinder-hacluster:ha
+  - cinder:ha
+- - cinder:cinder-volume-service
+  - nova-cloud-controller:cinder-volume-service
+- - cinder:identity-service
+  - keystone:identity-service
+- - cinder:amqp
+  - rabbitmq-server:amqp
+- - cinder:image-service
+  - glance:image-service
+- - cinder:certificates
+  - vault:certificates
+- - cinder-ceph:storage-backend
+  - cinder:storage-backend
+- - cinder-ceph:ceph
+  - ceph-mon:client
+- - cinder-ceph:ceph-access
+  - nova-compute:ceph-access
+- - radosgw-hacluster:ha
+  - ceph-radosgw:ha
+- - ceph-radosgw:mon
+  - ceph-mon:radosgw

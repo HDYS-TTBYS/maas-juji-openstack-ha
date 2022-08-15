@@ -1,0 +1,5 @@
+keystone:
+  os-admin-hostname: keystone.lab.hdys.home
+  os-internal-hostname: keystone.lab.hdys.home
+  os-public-hostname: keystone.lab.hdys.home
+  vip: 192.168.1.203
