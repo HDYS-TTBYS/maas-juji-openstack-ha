@@ -1,7 +1,22 @@
 # MAASとJujuでOpenstackをHA構成でデプロイする
 <br>
 
-下記URLの内容を参考
+## 構成
+|  アプリケーション  |  数  |  説明  |
+| ---- | ---- | ---- |
+|  ceph  |  3  |  分散ストレージ  |
+|  mysql  |  3  |  データベース  |
+|  vault  |  3  |  機密情報ストレージ  |
+|  neutron  |  3  |  ネットワーク機能 ルーティング、ファイアウォール、ロードバランシング、VPN など  |
+|  keystone  |  3  |  ユーザーの認証/認可を管理する  |
+|  rabbitmq  |  3  |  メッセージ・キューイング  |
+|  nove  |  3  |  コンピュートリソースを提供する |
+|  placement  |  3  |  仮想サーバ等の配置 |
+|  horizon  |  3  |  ダッシュボード |
+|  glance  |  3  |  マシンイメージを管理する |
+|  cinder  |  3  |  Nova で払い出したコンピュートリソースにボリュームを提供する |
+
+下記URLの内容を参考にしました。
 
 https://docs.openstack.org/project-deploy-guide/charm-deployment-guide/latest/
 
