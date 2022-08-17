@@ -23,6 +23,11 @@ https://docs.openstack.org/project-deploy-guide/charm-deployment-guide/latest/
   - Ubuntu 22.04 LTS (Jammy )
   - プロセッサをhostにする
 
+## MAASサーバーを用意する
+---
+サーバーにUbuntu 20.04 LTS (Focal)をインストールする
+- ip 192.168.1.2
+
 ## MAAS のインストール
 ---
 - サブネット 192.168.1.0/24
@@ -52,11 +57,19 @@ http://192.168.1.2:5240/MAAS
 https://maas.io/docs/how-to-manage-ip-addresses
 
 MAASのDHCPを有効にする
+
+(例)
 |  START IP ADDRESS  |  END IP ADDRESS  |
 | ---- | ---- |
 |  192.168.1.150  |  192.168.1.199  |
 
 既存のDHCPを無効にする
+
+## DNSを設定する
+---
+(例)
+
+Name: lab.hdys.home
 
 ## IP範囲を予約する
 ---
@@ -206,7 +219,7 @@ https://openstack.lab.hdys.home/horizon
 
 ログインに必要な最終的な認証情報は次のとおりです。
 
-- ユーザー名:管理者
+- ユーザー名:admin
 - パスワード: ****************
 - ドメイン: admin_domain
 
